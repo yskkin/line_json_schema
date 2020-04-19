@@ -1,0 +1,22 @@
+{
+  "name": "line-json-schema",
+  "version": "0.0.1",
+  "description": "JSON Schema for LINE API",
+  "main": "index.js",
+  "author": "Yoshiyuki Kinjo",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^25.3.0",
+    "jest-json-schema": "^2.1.0"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
+  }
+}
