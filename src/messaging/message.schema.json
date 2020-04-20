@@ -4,14 +4,23 @@
   "title": "Message",
   "type": "object",
   "definitions": {
+    "__sender": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 20 },
+        "iconUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https://.*$" }
+      }
+    },
     "sticker": {
       "type": "object",
       "properties": {
+        "sender": { "$ref": "#/definitions/__sender" },
         "type": { "const": "sticker" },
         "packageId": { "type": "string" },
         "stickerId": { "type": "string" }
       },
-      "required": ["type", "packageId", "stickerId"]
+      "required": ["type", "packageId", "stickerId"],
+      "additionalProperties": false
     }
   },
   "oneOf": [
