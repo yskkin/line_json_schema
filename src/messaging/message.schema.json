@@ -11,10 +11,38 @@
         "iconUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https://.*$" }
       }
     },
+    "__quickReply": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 13,
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "const": "action" },
+              "imageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https://.*$" },
+              "action": {
+                "allOf": [
+                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "properties": {
+                      "label": { "maxLength": 20 }
+                    }
+                  }
+                ],
+                "required": ["label"]
+              }
+            }
+          }
+        }
+      }
+    },
     "sticker": {
       "type": "object",
       "properties": {
         "sender": { "$ref": "#/definitions/__sender" },
+        "quickReply": { "$ref": "#/definitions/__quickReply" },
         "type": { "const": "sticker" },
         "packageId": { "type": "string" },
         "stickerId": { "type": "string" }
