@@ -42,50 +42,46 @@
       "additionalProperties": false
     },
     "datetimepicker": {
-      "type": "object",
       "properties": {
         "type": { "const": "datetimepicker" },
         "label": { "type": "string" },
         "data": { "type": "string", "maxLength": 300 },
-        "mode": { "enum": ["date", "time", "datetime"] },
-        "initial": { "type": "string" },
-        "min": { "type": "string" },
-        "max": { "type": "string" }
+        "mode": {},
+        "initial": {},
+        "min": {},
+        "max": {}
       },
-      "allOf": [
+      "required": ["type", "data", "mode"],
+      "additionalProperties": false,
+      "oneOf": [
         {
-          "if": { "properties": { "mode": { "const": "date" } } },
-          "then": {
-            "properties": {
-              "initial": { "type": "string", "format": "date" },
-              "min": { "type": "string", "format": "date" },
-              "max": { "type": "string", "format": "date" }
-            }
+          "type": "object",
+          "properties": {
+            "mode": { "const": "date" },
+            "initial": { "type": "string", "format": "date" },
+            "min": { "type": "string", "format": "date" },
+            "max": { "type": "string", "format": "date" }
           }
         },
         {
-          "if": { "properties": { "mode": { "const": "time" } } },
-          "then": {
-            "properties": {
-              "initial": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
-              "min": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
-              "max": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" }
-            }
+          "type": "object",
+          "properties": {
+            "mode": { "const": "time" },
+            "initial": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
+            "min": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
+            "max": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" }
           }
         },
         {
-          "if": { "properties": { "mode": { "const": "datetime" } } },
-          "then": {
-            "properties": {
-              "initial": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
-              "min": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
-              "max": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" }
-            }
+          "type": "object",
+          "properties": {
+            "mode": { "const": "datetime" },
+            "initial": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
+            "min": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
+            "max": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" }
           }
         }
-      ],
-      "required": ["type", "data", "mode"],
-      "additionalProperties": false
+      ]
     },
     "camera": {
       "type": "object",
@@ -119,6 +115,7 @@
     { "$ref": "#/definitions/postback" },
     { "$ref": "#/definitions/message" },
     { "$ref": "#/definitions/uri" },
+    { "$ref": "#/definitions/datetimepicker" },
     { "$ref": "#/definitions/camera" },
     { "$ref": "#/definitions/cameraRoll" },
     { "$ref": "#/definitions/location" }
