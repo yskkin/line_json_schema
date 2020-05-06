@@ -59,3 +59,28 @@ test('invalid text message', () => {
         emojis: Array(21).map((_, i) => ({ index: i, productId: 'a', emojiId: 'a' }))
     }).not.toMatchSchema(message);
 });
+
+test('valid image message', () => {
+    expect({ type: 'image', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: 'https://example.org/example.jpg' }).toMatchSchema(message);
+});
+
+test('invalid image message', () => {
+    expect({ type: 'image', originalContentUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'image', originalContentUrl: 'http://example.org/example.jpg', previewImageUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'image', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: 'http://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'image', originalContentUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg`, previewImageUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'image', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg` }).not.toMatchSchema(message);
+});
+
+test('valid video message', () => {
+    expect({ type: 'video', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: 'https://example.org/example.jpg' }).toMatchSchema(message);
+});
+
+test('invalid video message', () => {
+    expect({ type: 'video', originalContentUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'video', originalContentUrl: 'http://example.org/example.jpg', previewImageUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'video', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: 'http://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'video', originalContentUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg`, previewImageUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'video', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg` }).not.toMatchSchema(message);
+});
+

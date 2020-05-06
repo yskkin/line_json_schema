@@ -72,10 +72,36 @@
       },
       "required": ["type", "packageId", "stickerId"],
       "additionalProperties": false
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "sender": { "$ref": "#/definitions/__sender" },
+        "quickReply": { "$ref": "#/definitions/__quickReply" },
+        "type": { "const": "image" },
+        "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" },
+        "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" }
+      },
+      "required": ["type", "originalContentUrl", "previewImageUrl"],
+      "additionalProperties": false
+    },
+    "video": {
+      "type": "object",
+      "properties": {
+        "sender": { "$ref": "#/definitions/__sender" },
+        "quickReply": { "$ref": "#/definitions/__quickReply" },
+        "type": { "const": "video" },
+        "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" },
+        "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" }
+      },
+      "required": ["type", "originalContentUrl", "previewImageUrl"],
+      "additionalProperties": false
     }
   },
   "oneOf": [
     { "$ref": "#/definitions/text" },
-    { "$ref": "#/definitions/sticker" }
+    { "$ref": "#/definitions/sticker" },
+    { "$ref": "#/definitions/image" },
+    { "$ref": "#/definitions/video" }
   ]
 }
