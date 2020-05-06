@@ -38,6 +38,29 @@
         }
       }
     },
+    "text": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "text" },
+        "text": { "type": "string", "maxLength": 2000 },
+        "emojis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "index": { "type": "number" },
+              "productId": { "type": "string" },
+              "emojiId": { "type": "string" }
+            },
+            "required": ["index", "productId", "emojiId"],
+            "additionalProperties": false
+          },
+          "maxItems": 20
+        }
+      },
+      "required": ["type", "text"],
+      "additionalProperties": false
+    },
     "sticker": {
       "type": "object",
       "properties": {
@@ -52,6 +75,7 @@
     }
   },
   "oneOf": [
+    { "$ref": "#/definitions/text" },
     { "$ref": "#/definitions/sticker" }
   ]
 }

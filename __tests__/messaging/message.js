@@ -43,3 +43,19 @@ test('sticker message', () => {
     expect({ type: 'sticker', stickerId: '1' }).not.toMatchSchema(message);
     expect({ type: 'sticker', packageId: '1', stickerId: 1 }).not.toMatchSchema(message);
 });
+
+test('valid text message', () => {
+    expect({ type: 'text', text: 'test message' }).toMatchSchema(message);
+    expect({ type: 'text', text: 'text $ message', emojis: [{ index: 5, productId: 'test_product_id', emojiId: 'test_emoji_id' }] });
+});
+
+test('invalid text message', () => {
+    expect({ type: 'text' }).not.toMatchSchema(message);
+    expect({ type: 'text', text: Array(2001).fill('a').join('') }).not.toMatchSchema(message);
+    expect({ type: 'text', text: '$', emojis: [{ index: 0, productId: 'a' }]}).not.toMatchSchema(message);
+    expect({
+        type: 'text',
+        text: Array(21).fill('$').join(''),
+        emojis: Array(21).map((_, i) => ({ index: i, productId: 'a', emojiId: 'a' }))
+    }).not.toMatchSchema(message);
+});
