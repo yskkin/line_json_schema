@@ -94,3 +94,14 @@ test('invalid audio message', () => {
     expect({ type: 'audio', originalContentUrl: 'https://example.org/example.jpg', duration: 'http://example.org/example.jpg' }).not.toMatchSchema(message);
     expect({ type: 'audio', originalContentUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg`, duration: 42 }).not.toMatchSchema(message);
 });
+
+test('valid location message', () => {
+    expect({ type: 'location', address: 'foo', title: 'bar', latitude: 10, longitude: 20 }).toMatchSchema(message);
+});
+
+test('invalid location message', () => {
+    expect({ type: 'location', title: 'bar', latitude: 42, longitude: 42 }).not.toMatchSchema(message);
+    expect({ type: 'location', address: 'bar', latitude: 42, longitude: 42 }).not.toMatchSchema(message);
+    expect({ type: 'location', title: 'foo', address: 'bar', latitude: 42 }).not.toMatchSchema(message);
+    expect({ type: 'location', title: 'foo', address: 'bar', longitude: 42 }).not.toMatchSchema(message);
+});

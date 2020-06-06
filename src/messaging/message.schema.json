@@ -108,6 +108,20 @@
       },
       "required": ["type", "originalContentUrl", "duration"],
       "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "sender": { "$ref": "#/definitions/__sender" },
+        "quickReply": { "$ref": "#/definitions/__quickReply" },
+        "type": { "const": "location" },
+        "address": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 100 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" }
+      },
+      "required": ["type", "title", "address", "latitude", "longitude"],
+      "additionalProperties": false
     }
   },
   "oneOf": [
@@ -115,6 +129,7 @@
     { "$ref": "#/definitions/sticker" },
     { "$ref": "#/definitions/image" },
     { "$ref": "#/definitions/video" },
-    { "$ref": "#/definitions/audio" }
+    { "$ref": "#/definitions/audio" },
+    { "$ref": "#/definitions/location" }
   ]
 }
