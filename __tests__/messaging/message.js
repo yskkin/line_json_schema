@@ -84,3 +84,13 @@ test('invalid video message', () => {
     expect({ type: 'video', originalContentUrl: 'https://example.org/example.jpg', previewImageUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg` }).not.toMatchSchema(message);
 });
 
+test('valid audio message', () => {
+    expect({ type: 'audio', originalContentUrl: 'https://example.org/example.jpg', duration: 32.4 }).toMatchSchema(message);
+});
+
+test('invalid audio message', () => {
+    expect({ type: 'audio', originalContentUrl: 'https://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'audio', originalContentUrl: 'http://example.org/example.jpg', duration: 42 }).not.toMatchSchema(message);
+    expect({ type: 'audio', originalContentUrl: 'https://example.org/example.jpg', duration: 'http://example.org/example.jpg' }).not.toMatchSchema(message);
+    expect({ type: 'audio', originalContentUrl: `https://example.org/${Array(1000).fill('a').join('')}.jpg`, duration: 42 }).not.toMatchSchema(message);
+});
