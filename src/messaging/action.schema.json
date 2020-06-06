@@ -111,13 +111,57 @@
       "additionalProperties": false
     }
   },
-  "oneOf": [
-    { "$ref": "#/definitions/postback" },
-    { "$ref": "#/definitions/message" },
-    { "$ref": "#/definitions/uri" },
-    { "$ref": "#/definitions/datetimepicker" },
-    { "$ref": "#/definitions/camera" },
-    { "$ref": "#/definitions/cameraRoll" },
-    { "$ref": "#/definitions/location" }
+  "type": "object",
+  "allOf": [
+    {
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["postback", "message", "uri", "datetimepicker", "camera", "cameraRoll", "location"]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "postback" } }
+      },
+      "then": { "$ref": "#/definitions/postback" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "message" } }
+      },
+      "then": { "$ref": "#/definitions/message" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "uri" } }
+      },
+      "then": { "$ref": "#/definitions/uri" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "datetimepicker" } }
+      },
+      "then": { "$ref": "#/definitions/datetimepicker" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "camera" } }
+      },
+      "then": { "$ref": "#/definitions/camera" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "cameraRoll" } }
+      },
+      "then": { "$ref": "#/definitions/cameraRoll" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "location" } }
+      },
+      "then": { "$ref": "#/definitions/location" }
+    }
   ]
 }
