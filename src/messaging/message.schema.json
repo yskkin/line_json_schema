@@ -38,6 +38,17 @@
         }
       }
     },
+    "__imagemap_area": {
+      "type": "object",
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 },
+        "width": { "type": "number" },
+        "height": { "type": "number" }
+      },
+      "required": ["x", "y", "width", "height"],
+      "additionalProperties": false
+    },
     "text": {
       "type": "object",
       "properties": {
@@ -122,6 +133,87 @@
       },
       "required": ["type", "title", "address", "latitude", "longitude"],
       "additionalProperties": false
+    },
+    "imagemap": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "imagemap" },
+        "baseUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+        "altText": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "baseSize": {
+          "type": "object",
+          "properties": {
+            "width": { "const": 1040 },
+            "height": { "type": "number" }
+          },
+          "required": ["width", "height"],
+          "additionalProperties": false
+        },
+        "video": {
+          "type": "object",
+          "properties": {
+            "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+            "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+            "area": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number", "minimum": 0 },
+                "y": { "type": "number", "minimum": 0 },
+                "width": { "type": "number" },
+                "height": { "type": "number" }
+              }
+            },
+            "externalLink": {
+              "type": "object",
+              "properties": {
+                "linkUrl": { "type": "string", "maxLength": 1000, "format": "url" },
+                "label": { "type": "string", "maxLength": 30 }
+              }
+            }
+          }
+        },
+        "actions": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "allOf": [
+              {
+                "if": {
+                  "properties": { "type": { "const": "uri" } }
+                },
+                "then": {
+                  "properties": {
+                    "type": { "const": "uri" },
+                    "label": { "type": "string", "maxLength": 50 },
+                    "linkUri": { "type": "string", "maxLength": 1000, "format": "uri" },
+                    "area": { "$ref": "#/definitions/__imagemap_area" }
+                  },
+                  "required": ["type", "label", "linkUri", "area"],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "message" } }
+                },
+                "then": {
+                  "properties": {
+                    "type": { "const": "message" },
+                    "label": { "type": "string", "maxLength": 50 },
+                    "text": { "type": "string", "maxLength": 400 },
+                    "area": { "$ref": "#/definitions/__imagemap_area" }
+                  },
+                  "required": ["type", "label", "text", "area"],
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": ["type", "baseUrl", "altText", "baseSize", "actions"],
+      "additionalProperties": false
     }
   },
   "allOf": [
@@ -129,7 +221,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["text", "sticker", "image", "video", "audio", "location"]
+          "enum": ["text", "sticker", "image", "video", "audio", "location", "imagemap"]
         }
       }
     },
@@ -168,6 +260,12 @@
         "properties": { "type": { "const": "location" } }
       },
       "then": { "$ref": "#/definitions/location" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "imagemap" } }
+      },
+      "then": { "$ref": "#/definitions/imagemap" }
     }
   ]
 }

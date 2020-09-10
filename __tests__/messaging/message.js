@@ -105,3 +105,128 @@ test('invalid location message', () => {
     expect({ type: 'location', title: 'foo', address: 'bar', latitude: 42 }).not.toMatchSchema(message);
     expect({ type: 'location', title: 'foo', address: 'bar', longitude: 42 }).not.toMatchSchema(message);
 });
+
+test('valid imagemap message', () => {
+    expect({
+        type: 'imagemap',
+        baseUrl: 'https://example.com/foo.jpg',
+        altText: 'test alt text',
+        baseSize: { width: 1040, height: 520 },
+        actions: [
+            {
+                type: 'uri',
+                label: 'test label',
+                linkUri: 'tel:+81312345678',
+                area: {
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 50
+                }
+            },
+            {
+                type: 'message',
+                label: 'test label2',
+                text: 'test message',
+                area: {
+                    x: 100,
+                    y: 0,
+                    width: 100,
+                    height: 50
+                }
+            }
+        ]
+    }).toMatchSchema(message);
+    expect({
+        type: 'imagemap',
+        baseUrl: 'https://example.com/foo.jpg',
+        altText: 'test alt text',
+        baseSize: { width: 1040, height: 520 },
+        video: {
+            originalContentUrl: 'https://example.com/bar.mp4',
+            previewImageUrl: 'https://example.com/bar.jpg',
+            area: {
+                x: 0,
+                y: 0,
+                width: 1040,
+                height: 500
+            }
+        },
+        actions: [
+            {
+                type: 'uri',
+                label: 'test label',
+                linkUri: 'https://example.com/foo',
+                area: {
+                    x: 100,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                }
+            }
+        ]
+    }).toMatchSchema(message);
+});
+
+test('invalid imagemap message', () => {
+    expect({
+        type: 'imagemap',
+        baseUrl: `https://example.com/${Array(1000).fill('a').join()}`,
+        altText: 'test alt text',
+        baseSize: { width: 1040, height: 520 },
+        actions: [
+            {
+                type: 'uri',
+                label: 'test label',
+                linkUri: 'tel:+81312345678',
+                area: {
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 50
+                }
+            },
+            {
+                type: 'message',
+                label: 'test label2',
+                text: 'test message',
+                area: {
+                    x: 100,
+                    y: 0,
+                    width: 100,
+                    height: 50
+                }
+            }
+        ]
+    }).not.toMatchSchema(message);
+    expect({
+        type: 'imagemap',
+        baseUrl: 'https://example.com/foo.jpg',
+        altText: '',
+        baseSize: { width: 1040, height: 520 },
+        video: {
+            originalContentUrl: 'https://example.com/bar.mp4',
+            previewImageUrl: 'https://example.com/bar.jpg',
+            area: {
+                x: 0,
+                y: 0,
+                width: 1040,
+                height: 500
+            }
+        },
+        actions: [
+            {
+                type: 'uri',
+                label: 'test label',
+                linkUri: 'https://example.com/foo',
+                area: {
+                    x: 100,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                }
+            }
+        ]
+    }).not.toMatchSchema(message);
+});
+
