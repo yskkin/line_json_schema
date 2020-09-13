@@ -214,6 +214,185 @@
       },
       "required": ["type", "baseUrl", "altText", "baseSize", "actions"],
       "additionalProperties": false
+    },
+    "__template_buttons": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "buttons" },
+        "thumbnailImageUri": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
+        "imageAspectRatio": { "type": "string", "enum": ["rectangle", "square"] },
+        "imageSize": { "type": "string", "enum": ["cover", "contain"] },
+        "imageBackgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}" },
+        "title": { "type": "string", "maxLength": 40 },
+        "text": { "type": "string", "maxLength": 160 },
+        "defaultAction": {
+          "allOf": [
+            { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+            {
+              "properties": {
+                "label": { "maxLength": 20 }
+              }
+            }
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+              {
+                "properties": {
+                  "label": { "maxLength": 20 }
+                }
+              }
+            ]
+          },
+          "maxItems": 4
+        }
+      },
+      "required": ["type", "text", "actions"],
+      "additionalproperties": false
+    },
+    "__template_confirm": {
+      "type": "object",
+      "properties": {
+        "type" : { "const": "confirm" },
+        "text": { "type": "string", "maxLength": 240 },
+        "actions": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+              {
+                "properties": {
+                  "label": { "maxLength": 20 }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": ["type", "text", "actions"],
+      "additionalproperties": false
+    },
+    "__template_carousel": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "carousel" },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "thumbnailImageUri": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
+              "imageBackgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}" },
+              "title": { "type": "string", "maxLength": 40 },
+              "text": { "type": "string", "maxLength": 120 },
+              "defaultAction": {
+                "allOf": [
+                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "properties": {
+                      "label": { "maxLength": 20 }
+                    }
+                  }
+                ]
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                    {
+                      "properties": {
+                        "label": { "maxLength": 20 }
+                      }
+                    }
+                  ]
+                },
+                "maxItems": 3
+              }
+            },
+            "required": ["text", "actions"]
+          },
+          "maxItems": 10
+        },
+        "imageAspectRatio": { "type": "string", "enum": ["rectangle", "square"]},
+        "imageSize": { "type": "string", "enum": ["cover", "contain"] }
+      },
+      "required": ["type", "columns"],
+      "additionalProperties": false
+    },
+    "__template_image_carousel": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "image_carousel" },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "imageUrl": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
+              "action": {
+                "allOf": [
+                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "properties": {
+                      "label": { "maxLength": 20 }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": ["imageUrl", "action"]
+          },
+          "maxItems": 10
+        }
+      },
+      "required": ["type", "columns"],
+      "additionalProperties": false
+    },
+    "template": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "template" },
+        "altText": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "template": {
+          "allOf": [
+            {
+              "if": {
+                "properties": { "type": { "const": "buttons" } }
+              },
+              "then": { "$ref": "#/definitions/__template_buttons" }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "confirm" } }
+              },
+              "then": { "$ref": "#/definitions/__template_confirm" }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "carousel" } }
+              },
+              "then": { "$ref": "#/definitions/__template_carousel" }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "image_carousel" } }
+              },
+              "then": { "$ref": "#/definitions/__template_image_carousel" }
+            },
+            {
+              "properties": {
+                "type": { "type": "string", "enum": ["buttons", "confirm", "carousel", "image_carousel"] }
+              }
+            }
+          ]
+        }
+      },
+      "required": ["type", "altText", "template"],
+      "additionalProperties": false
     }
   },
   "allOf": [
@@ -221,7 +400,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["text", "sticker", "image", "video", "audio", "location", "imagemap"]
+          "enum": ["text", "sticker", "image", "video", "audio", "location", "imagemap", "template"]
         }
       }
     },
@@ -266,6 +445,12 @@
         "properties": { "type": { "const": "imagemap" } }
       },
       "then": { "$ref": "#/definitions/imagemap" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "template" } }
+      },
+      "then": { "$ref": "#/definitions/template" }
     }
   ]
 }
