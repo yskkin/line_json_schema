@@ -495,6 +495,264 @@
       },
       "required": ["type", "altText", "template"],
       "additionalProperties": false
+    },
+    "__flex_blockstyle": {
+      "type": "object",
+      "properties": {
+        "backgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "separator": { "type": "boolean" },
+        "separatorColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"}
+      },
+      "additionalProperties": false
+    },
+    "__flex_image": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "image"},
+        "url": { "type": "string", "format": "uri", "pattern": "^https://"},
+        "flex": { "type": "number"},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "position": { "type": "string", "enum": ["relative", "absolute"]},
+        "offsetTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "align": { "type": "string", "enum": ["start", "end", "center"]},
+        "gravity": { "type": "string", "enum": ["top", "bottom", "center"]},
+        "size": { "type": "string", "enum": ["xxs", "xs", "sm", "md", "lg", "xl", "xxl", "3xl", "4xl", "5xl", "full"]},
+        "aspectRatio": { "type": "string", "pattern": "^[0-9.]+:[0-9.]+$"},
+        "aspectMode": { "type": "string", "enum": ["cover", "fit"]},
+        "backgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "action": {"todo": {}}
+      },
+      "required": ["type", "url"],
+      "additionalProperties": false
+    },
+    "__flex_button": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "button"},
+        "action": {"todo": {}},
+        "flex": { "type": "number"},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "position": { "type": "string", "enum": ["relative", "absolute"]},
+        "offsetTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "height": { "type": "string", "enum": ["sm", "md"]},
+        "style": { "type": "string", "enum": ["primary", "secondary", "link"]},
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "gravity": { "type": "string", "enum": ["top", "bottom", "center"]}
+      },
+      "requried": ["type", "action"],
+      "additionalProperties": false
+    },
+    "__flex_text": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "text"},
+        "text": { "type": "string"},
+        "contents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "const": "span"},
+              "text": { "type": "string"},
+              "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+              "size": { "type": "string", "enum": ["xxs", "xs", "sm", "md", "lg", "xl", "xxl", "3xl", "4xl", "5xl"]},
+              "weight": { "type":"string", "enum": ["regular", "bold"]},
+              "style": { "type":"string", "enum": ["normal", "italic"]},
+              "decoration": { "type":"string", "enum": ["none", "underline", "line-through"]}
+            },
+            "required": ["type"],
+            "additionalProperties": false
+          }
+        },
+        "flex": { "type": "number"},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "position": { "type": "string", "enum": ["relative", "absolute"]},
+        "offsetTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "size": { "type": "string", "enum": ["xxs", "xs", "sm", "md", "lg", "xl", "xxl", "3xl", "4xl", "5xl"]},
+        "align": { "type": "string", "enum": ["start", "end", "center"]},
+        "gravity": { "type": "string", "enum": ["top", "bottom", "center"]},
+        "wrap": { "type": "boolean"},
+        "maxLines": { "type": "number"},
+        "weight": { "type":"string", "enum": ["regular", "bold"]},
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "action": {"todo": {}},
+        "style": { "type":"string", "enum": ["normal", "italic"]},
+        "decoration": { "type":"string", "enum": ["none", "underline", "line-through"]}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "__flex_separator": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "separator"},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "__flex_filler": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "filler"},
+        "flex": { "type": "number"}
+       },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "__flex_spacer": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "spacer"},
+        "size": { "type": "string", "enum": ["xs", "sm", "md", "lg", "xl", "xxl"]}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "__flex_icon": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "icon"},
+        "url": { "type": "string", "format": "uri", "pattern": "^https://"},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "position": { "type": "string", "enum": ["relative", "absolute"]},
+        "offsetTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "size": { "type": "string", "enum": ["xxs", "xs", "sm", "md", "lg", "xl", "xxl", "3xl", "4xl", "5xl"]},
+        "aspectRatio": { "type": "string", "pattern": "^[0-9.]+:[0-9.]+$"}
+      },
+      "requried": ["type", "url"],
+      "additionalProperties": false
+    },
+    "__flex_box": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "box" },
+        "layout": { "type": "string", "enum": ["horizontal", "vertical", "baseline"]},
+        "contents": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/__flex_box"},
+              { "$ref": "#/definitions/__flex_button"},
+              { "$ref": "#/definitions/__flex_image"},
+              { "$ref": "#/definitions/__flex_text"},
+              { "$ref": "#/definitions/__flex_separator"},
+              { "$ref": "#/definitions/__flex_filler"},
+              { "$ref": "#/definitions/__flex_spacer"},
+              { "$ref": "#/definitions/__flex_icon"}
+            ]
+          }
+        },
+        "backgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "borderColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}"},
+        "borderWidth": { "type": "string", "pattern": "^([0-9.]+px|none|light|normal|medium|semi-bold|bold)$"},
+        "cornerRadius": { "type": "string", "pattern": "^([0-9.]+px|none|xs|sm|md|lg|xl|xxl)$"},
+        "width": { "type": "string", "pattern": "^[0-9.]+(px|%)$"},
+        "height": { "type": "string", "pattern": "^[0-9.]+(px|%)$"},
+        "flex": { "type": "number"},
+        "spacing": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "margin": { "type": "string", "enum": ["none", "xs", "sm", "md", "lg", "xl", "xxl"]},
+        "paddingAll": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$"},
+        "paddingTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$"},
+        "paddingBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$"},
+        "paddingStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$"},
+        "paddingEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$"},
+        "position": { "type": "string", "enum": ["relative", "absolute"]},
+        "offsetTop": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetBottom": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetStart": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "offsetEnd": { "type": "string", "pattern": "^([0-9.]+(%|px)|none|xs|sm|md|lg|xl|xxl)$" },
+        "action": { "todo": {}}
+      },
+      "required": ["type", "layout", "contents"],
+      "additionalProperties": false
+    },
+    "__flex_bubble": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "bubble"},
+        "size": { "type": "string", "enum": ["nano", "micro", "kilo", "mega", "giga"]},
+        "direction": { "type": "string", "enum": ["ltr", "rtl"]},
+        "header": { "$ref": "#/definitions/__flex_box"},
+        "hero": {
+          "oneOf": [
+            { "$ref": "#/definitions/__flex_box"},
+            { "$ref": "#/definitions/__flex_image"}
+          ]
+        },
+        "body": { "$ref": "#/definitions/__flex_box"},
+        "footer": { "$ref": "#/definitions/__flex_box"},
+        "styles": {
+          "type": "object",
+          "properties": {
+            "header": { "$ref": "#/definitions/__flex_blockstyle"},
+            "hero": { "$ref": "#/definitions/__flex_blockstyle"},
+            "body": { "$ref": "#/definitions/__flex_blockstyle"},
+            "footer": { "$ref": "#/definitions/__flex_blockstyle"}
+          },
+          "additionalProperties": false
+        },
+        "action": { "todo": {}}
+      },
+      "required": ["type"]
+    },
+    "__flex_carousel": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "carousel"},
+        "contents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__flex_bubble"
+          },
+          "maxItems": 10
+        }
+      },
+      "required": ["type", "contents"],
+      "additionalProperties": false
+    },
+    "flex": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "type"},
+        "altText": { "type": "string", "maxLength": 400, "minLength": 1},
+        "contents": {
+          "allOf": [
+            {
+              "properties": {
+                "type": { "type": "strig", "enum": ["bubble", "carousel"]}
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "bubble"}}
+              },
+              "then": { "$ref": "#/definitions/__flex_bubble"}
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "carousel"}}
+              },
+              "then": { "$ref": "#/definitions/__flex_carousel"}
+            }
+          ]
+        }
+      },
+      "required": ["type", "altText", "contents"],
+      "additionalProperties": false
     }
   },
   "allOf": [
@@ -510,7 +768,8 @@
             "audio",
             "location",
             "imagemap",
-            "template"
+            "template",
+            "flex"
           ]
         }
       }
@@ -562,6 +821,12 @@
         "properties": { "type": { "const": "template" } }
       },
       "then": { "$ref": "#/definitions/template" }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "flex"}}
+      },
+      "then": { "$ref": "#/definitions/flex"}
     }
   ]
 }
