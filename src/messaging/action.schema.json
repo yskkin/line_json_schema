@@ -67,7 +67,10 @@
           "type": "object",
           "properties": {
             "mode": { "const": "time" },
-            "initial": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
+            "initial": {
+              "type": "string",
+              "pattern": "([01]\\d|2[0-3]):[0-5]\\d"
+            },
             "min": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" },
             "max": { "type": "string", "pattern": "([01]\\d|2[0-3]):[0-5]\\d" }
           }
@@ -76,9 +79,18 @@
           "type": "object",
           "properties": {
             "mode": { "const": "datetime" },
-            "initial": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
-            "min": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" },
-            "max": { "type": "string", "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d" }
+            "initial": {
+              "type": "string",
+              "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d"
+            },
+            "min": {
+              "type": "string",
+              "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d"
+            },
+            "max": {
+              "type": "string",
+              "pattern": "(19\\d{2}|20\\d{2}|2100)-(0\\d|1[0-2])-([012]\\d|3[01])[tT]([01]\\d|2[0-3]):[0-5]\\d"
+            }
           }
         }
       ]
@@ -117,7 +129,15 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["postback", "message", "uri", "datetimepicker", "camera", "cameraRoll", "location"]
+          "enum": [
+            "postback",
+            "message",
+            "uri",
+            "datetimepicker",
+            "camera",
+            "cameraRoll",
+            "location"
+          ]
         }
       }
     },

@@ -8,7 +8,12 @@
       "type": "object",
       "properties": {
         "name": { "type": "string", "maxLength": 20 },
-        "iconUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https://.*$" }
+        "iconUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "uri",
+          "pattern": "^https://.*$"
+        }
       }
     },
     "__quickReply": {
@@ -21,10 +26,17 @@
             "type": "object",
             "properties": {
               "type": { "const": "action" },
-              "imageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https://.*$" },
+              "imageUrl": {
+                "type": "string",
+                "maxLength": 1000,
+                "format": "uri",
+                "pattern": "^https://.*$"
+              },
               "action": {
                 "allOf": [
-                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+                  },
                   {
                     "properties": {
                       "label": { "maxLength": 20 }
@@ -90,8 +102,18 @@
         "sender": { "$ref": "#/definitions/__sender" },
         "quickReply": { "$ref": "#/definitions/__quickReply" },
         "type": { "const": "image" },
-        "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" },
-        "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" }
+        "originalContentUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "uri",
+          "pattern": "^https://.*$"
+        },
+        "previewImageUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "uri",
+          "pattern": "^https://.*$"
+        }
       },
       "required": ["type", "originalContentUrl", "previewImageUrl"],
       "additionalProperties": false
@@ -102,8 +124,18 @@
         "sender": { "$ref": "#/definitions/__sender" },
         "quickReply": { "$ref": "#/definitions/__quickReply" },
         "type": { "const": "video" },
-        "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" },
-        "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "uri", "pattern": "^https:\/\/.*$" }
+        "originalContentUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "uri",
+          "pattern": "^https://.*$"
+        },
+        "previewImageUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "uri",
+          "pattern": "^https://.*$"
+        }
       },
       "required": ["type", "originalContentUrl", "previewImageUrl"],
       "additionalProperties": false
@@ -114,7 +146,12 @@
         "sender": { "$ref": "#/definitions/__sender" },
         "quickReply": { "$ref": "#/definitions/__quickReply" },
         "type": { "const": "audio" },
-        "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+        "originalContentUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "url",
+          "pattern": "^https://.*$"
+        },
         "duration": { "type": "number" }
       },
       "required": ["type", "originalContentUrl", "duration"],
@@ -138,7 +175,12 @@
       "type": "object",
       "properties": {
         "type": { "const": "imagemap" },
-        "baseUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+        "baseUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "format": "url",
+          "pattern": "^https://.*$"
+        },
         "altText": { "type": "string", "minLength": 1, "maxLength": 400 },
         "baseSize": {
           "type": "object",
@@ -152,8 +194,18 @@
         "video": {
           "type": "object",
           "properties": {
-            "originalContentUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
-            "previewImageUrl": { "type": "string", "maxLength": 1000, "format": "url", "pattern": "^https:\/\/.*$" },
+            "originalContentUrl": {
+              "type": "string",
+              "maxLength": 1000,
+              "format": "url",
+              "pattern": "^https://.*$"
+            },
+            "previewImageUrl": {
+              "type": "string",
+              "maxLength": 1000,
+              "format": "url",
+              "pattern": "^https://.*$"
+            },
             "area": {
               "type": "object",
               "properties": {
@@ -166,7 +218,11 @@
             "externalLink": {
               "type": "object",
               "properties": {
-                "linkUrl": { "type": "string", "maxLength": 1000, "format": "url" },
+                "linkUrl": {
+                  "type": "string",
+                  "maxLength": 1000,
+                  "format": "url"
+                },
                 "label": { "type": "string", "maxLength": 30 }
               }
             }
@@ -186,7 +242,11 @@
                   "properties": {
                     "type": { "const": "uri" },
                     "label": { "type": "string", "maxLength": 50 },
-                    "linkUri": { "type": "string", "maxLength": 1000, "format": "uri" },
+                    "linkUri": {
+                      "type": "string",
+                      "maxLength": 1000,
+                      "format": "uri"
+                    },
                     "area": { "$ref": "#/definitions/__imagemap_area" }
                   },
                   "required": ["type", "label", "linkUri", "area"],
@@ -219,15 +279,28 @@
       "type": "object",
       "properties": {
         "type": { "const": "buttons" },
-        "thumbnailImageUri": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
-        "imageAspectRatio": { "type": "string", "enum": ["rectangle", "square"] },
+        "thumbnailImageUri": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 1000,
+          "pattern": "^https://.*$"
+        },
+        "imageAspectRatio": {
+          "type": "string",
+          "enum": ["rectangle", "square"]
+        },
         "imageSize": { "type": "string", "enum": ["cover", "contain"] },
-        "imageBackgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}" },
+        "imageBackgroundColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{1,6}"
+        },
         "title": { "type": "string", "maxLength": 40 },
         "text": { "type": "string", "maxLength": 160 },
         "defaultAction": {
           "allOf": [
-            { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+            {
+              "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+            },
             {
               "properties": {
                 "label": { "maxLength": 20 }
@@ -239,7 +312,9 @@
           "type": "array",
           "items": {
             "allOf": [
-              { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+              {
+                "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+              },
               {
                 "properties": {
                   "label": { "maxLength": 20 }
@@ -256,13 +331,15 @@
     "__template_confirm": {
       "type": "object",
       "properties": {
-        "type" : { "const": "confirm" },
+        "type": { "const": "confirm" },
         "text": { "type": "string", "maxLength": 240 },
         "actions": {
           "type": "array",
           "items": {
             "allOf": [
-              { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+              {
+                "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+              },
               {
                 "properties": {
                   "label": { "maxLength": 20 }
@@ -284,13 +361,23 @@
           "items": {
             "type": "object",
             "properties": {
-              "thumbnailImageUri": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
-              "imageBackgroundColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{1,6}" },
+              "thumbnailImageUri": {
+                "type": "string",
+                "format": "uri",
+                "maxLength": 1000,
+                "pattern": "^https://.*$"
+              },
+              "imageBackgroundColor": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{1,6}"
+              },
               "title": { "type": "string", "maxLength": 40 },
               "text": { "type": "string", "maxLength": 120 },
               "defaultAction": {
                 "allOf": [
-                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+                  },
                   {
                     "properties": {
                       "label": { "maxLength": 20 }
@@ -302,7 +389,9 @@
                 "type": "array",
                 "items": {
                   "allOf": [
-                    { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                    {
+                      "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+                    },
                     {
                       "properties": {
                         "label": { "maxLength": 20 }
@@ -317,7 +406,10 @@
           },
           "maxItems": 10
         },
-        "imageAspectRatio": { "type": "string", "enum": ["rectangle", "square"]},
+        "imageAspectRatio": {
+          "type": "string",
+          "enum": ["rectangle", "square"]
+        },
         "imageSize": { "type": "string", "enum": ["cover", "contain"] }
       },
       "required": ["type", "columns"],
@@ -332,10 +424,17 @@
           "items": {
             "type": "object",
             "properties": {
-              "imageUrl": { "type": "string", "format": "uri", "maxLength": 1000, "pattern": "^https://.*$" },
+              "imageUrl": {
+                "type": "string",
+                "format": "uri",
+                "maxLength": 1000,
+                "pattern": "^https://.*$"
+              },
               "action": {
                 "allOf": [
-                  { "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json" },
+                  {
+                    "$ref": "https://github.com/yskkin/line-json-schema/src/messaging/action.schema.json"
+                  },
                   {
                     "properties": {
                       "label": { "maxLength": 20 }
@@ -385,7 +484,10 @@
             },
             {
               "properties": {
-                "type": { "type": "string", "enum": ["buttons", "confirm", "carousel", "image_carousel"] }
+                "type": {
+                  "type": "string",
+                  "enum": ["buttons", "confirm", "carousel", "image_carousel"]
+                }
               }
             }
           ]
@@ -400,7 +502,16 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["text", "sticker", "image", "video", "audio", "location", "imagemap", "template"]
+          "enum": [
+            "text",
+            "sticker",
+            "image",
+            "video",
+            "audio",
+            "location",
+            "imagemap",
+            "template"
+          ]
         }
       }
     },
